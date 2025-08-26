@@ -13,5 +13,11 @@ def get_data():
     events = consumer.add_timestamp(events)
     dal.insert_documents(documents=events, topic='not_interesting')
 
+@app.get('/data')
+def return_the_data():
+    events = dal.find_not_interesting()
+    return list(events)
+
+
 if __name__ == '__main__':
     uvicorn.run(app, host='localhost', port=8002)
